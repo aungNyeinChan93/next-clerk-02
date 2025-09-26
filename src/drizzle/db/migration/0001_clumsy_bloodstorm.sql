@@ -1,0 +1,1 @@
+ALTER TABLE "todos" ADD COLUMN "isCompleted" boolean DEFAULT true NOT NULL;
