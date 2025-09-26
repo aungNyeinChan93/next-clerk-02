@@ -55,6 +55,7 @@ const RegisterForm = () => {
         throw new Error("email verification fail");
       }
       if (completeSignUp.status === "complete") {
+        setPendingVerification(false);
         await setActive({ session: completeSignUp.createdSessionId });
         return router.push("/");
       }

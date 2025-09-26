@@ -13,11 +13,11 @@ export default clerkMiddleware(async (auth, req) => {
 
     const client = await clerkClient();
 
-    const user = await client.users.getUser(userId as string);
+    const user = userId && await client.users.getUser(userId as string);
 
     if (!isPublicRoutes(req) && !isAuthenticated) await auth.protect();
 
-    if (isAdminOnlyRoutes(req) && user?.publicMetadata?.role !== 'admin') {
+    if (isAdminOnlyRoutes(req) && user && user?.publicMetadata?.role !== 'admin') {
         return NextResponse.rewrite(new URL('/', req.nextUrl))
     }
 
