@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 
 const isPublicRoutes = createRouteMatcher([
-    '/', '/register(.*)', '/login(.*)', 'api/webhook/register(.*)'
+    '/', '/register(.*)', '/login(.*)', '/api/webhook/register',
 ])
 const isAdminOnlyRoutes = createRouteMatcher(['/admin-dashboard(.*)'])
 
@@ -13,14 +13,17 @@ export default clerkMiddleware(async (auth, req) => {
 
     const client = await clerkClient();
 
-    const user = userId && await client.users.getUser(userId as string);
+    const user = userId && isAuthenticated && await client.users.getUser(userId as string);
 
     if (!isPublicRoutes(req) && !isAuthenticated) await auth.protect();
+
+    if (isAuthenticated && isPublicRoutes(req)) {
+        return NextResponse.rewrite(new URL('/', req.nextUrl))
+    }
 
     if (isAdminOnlyRoutes(req) && user && user?.publicMetadata?.role !== 'admin') {
         return NextResponse.rewrite(new URL('/', req.nextUrl))
     }
-
 
 });
 
