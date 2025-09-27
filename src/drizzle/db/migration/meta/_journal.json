@@ -15,6 +15,13 @@
       "when": 1758788398685,
       "tag": "0001_clumsy_bloodstorm",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1758989925546,
+      "tag": "0002_purple_crusher_hogan",
+      "breakpoints": true
     }
   ]
 }

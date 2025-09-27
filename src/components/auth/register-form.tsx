@@ -32,13 +32,12 @@ const RegisterForm = () => {
         password,
       });
 
-      // test event
-      // eventBus.emit("demo.create");
-
       await signUp.prepareEmailAddressVerification({
         strategy: "email_code",
       });
+
       setPendingVerification(true);
+
     } catch (error) {
       console.error(error instanceof Error ? error?.message : error);
       setError(error instanceof Error ? error?.message : "register fail");
@@ -47,18 +46,22 @@ const RegisterForm = () => {
 
   const onPressVerify = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
+
       if (completeSignUp.status !== "complete") {
         throw new Error("email verification fail");
       }
+
       if (completeSignUp.status === "complete") {
         setPendingVerification(false);
         await setActive({ session: completeSignUp.createdSessionId });
         return router.push("/");
       }
+      
     } catch (error) {
       console.error(error instanceof Error ? error?.message : error);
       setError(error instanceof Error ? error?.message : "register fail");

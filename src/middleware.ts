@@ -5,7 +5,9 @@ import { NextResponse } from 'next/server';
 const isPublicRoutes = createRouteMatcher([
     '/', '/register(.*)', '/login(.*)', '/api/webhook/register',
 ])
+
 const isAdminOnlyRoutes = createRouteMatcher(['/admin-dashboard(.*)'])
+
 
 export default clerkMiddleware(async (auth, req) => {
 

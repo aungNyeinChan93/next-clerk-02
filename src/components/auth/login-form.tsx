@@ -21,9 +21,11 @@ const LoginForm = () => {
         identifier: email as string,
         password,
       });
+
       if (loginData?.status !== "complete") {
         throw new Error("login fail");
       }
+
       if (loginData?.status === "complete" && setActive) {
         await setActive({ session: loginData.createdSessionId! });
         router.push("/");
