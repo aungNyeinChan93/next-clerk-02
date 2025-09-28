@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         const body: Todo = await request.json();
 
         const newTodo = user && await db.insert(todosTable).values({
-            author_id: user?.id!,
+            author_id: user?.id,
             task: body?.task as string,
         });
 

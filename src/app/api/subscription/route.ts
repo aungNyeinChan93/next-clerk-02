@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
             });
 
         return NextResponse.json({
-            message: `user <${updateId}> : subscription update success!`
+            message: `user <${updateId && updateId[0]?.id as string}> : subscription update success!`
         })
 
 
@@ -60,6 +60,7 @@ export async function GET(requset: NextRequest) {
 
         return NextResponse.json({
             userData: { ...userData, subscriptionEnd: userData.subscriptionEnd?.toLocaleDateString() },
+            message: 'success'
         })
     } catch (error) {
         console.error(error instanceof Error ? error?.message : 'get subscription fail')
